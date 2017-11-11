@@ -98,7 +98,10 @@ public class BPlus_Tree {
 	// Search function for single key
 	public void search(double key) {
 
-		if(root == null) return;
+		if(root == null){
+			System.out.println("Null");
+			return;
+		}
 		Node possibleNode = searchKey(key).peek();
 		int index = Collections.binarySearch(possibleNode.keys, key);
 		if (index >= 0){
@@ -108,18 +111,33 @@ public class BPlus_Tree {
 			}
 			System.out.println(sb.substring(0,sb.length()-1));
 		}
+		else{
+			System.out.println("Null");
+		}
 
 	}
 
 	public void search(double key1, double key2){
 		
-		if(root == null) return;
+		if(root == null){
+			System.out.println("Null");
+			return;
+		}
+		
+		// Find key1 or key which is just greater than key1 if key1 is not present
 		LeafNode possibleNode = (LeafNode)searchKey(key1).peek();
 		int index = Collections.binarySearch(possibleNode.keys, key1);
 		index = index < 0 ? -index - 1 : index;
+		if(index == possibleNode.keys.size()){
+			possibleNode = possibleNode.getNext();
+			index = 0;
+		}
 		double iter = key1;
 		StringBuilder sb = new StringBuilder();
+		
+		// Loop until key2 is reached
 		while(iter <= key2 && possibleNode != null){
+			
 			iter = possibleNode.keys.get(index);
 			while(iter <= key2){
 				for(String value: possibleNode.valueList.get(index)){
@@ -132,7 +150,11 @@ public class BPlus_Tree {
 			possibleNode = possibleNode.getNext();
 			index = 0;
 		}
-		System.out.print(sb.substring(0, sb.length()-1));
+		if(sb.length() == 0){
+			System.out.println("Null");
+			return;
+		}
+		System.out.println(sb.substring(0, sb.length()-1));
 	}
 	
 	private Stack<Node> searchKey(double key) {
