@@ -5,7 +5,7 @@ import java.util.List;
 public class LeafNode extends Node{
 
 	public List<List<String>> valueList;
-	Node prev, next;
+	private Node prev, next;
 	
 	public LeafNode(){
 		valueList = new ArrayList<>();
@@ -17,8 +17,8 @@ public class LeafNode extends Node{
 		this.next = next;
 	}
 	
-	public Node getNext(){
-		return next;
+	public LeafNode getNext(){
+		return (LeafNode)next;
 	}
 	
 	public void setPrev(Node prev){
@@ -57,11 +57,18 @@ public class LeafNode extends Node{
 		
 		partitions[0].keys = new ArrayList<>(this.keys.subList(0, this.keys.size() / 2));
 		partitions[0].valueList = new ArrayList<>(this.valueList.subList(0, this.keys.size() / 2));
+		
 		partitions[0].next = partitions[1];
+		partitions[0].prev = this.prev;
+		if(this.prev != null)
+			((LeafNode)this.prev).next = partitions[0];
 		
 		partitions[1].keys = new ArrayList<>(this.keys.subList(this.keys.size() / 2, this.keys.size()));
 		partitions[1].valueList = new ArrayList<>(this.valueList.subList(this.keys.size() / 2, this.keys.size()));
 		partitions[1].prev = partitions[0];
+		partitions[1].next = this.next;
+		if(this.next != null)
+			((LeafNode)this.next).prev = partitions[1];
 		
 		return partitions;
 	}

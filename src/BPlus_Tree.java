@@ -1,14 +1,14 @@
 import java.util.Collections;
 import java.util.Stack;
 
-public class BTree {
+public class BPlus_Tree {
 
 	public Node root;
 	static Integer order;
 
-	public BTree(int order) {
+	public BPlus_Tree(int order) {
 		root = null;
-		BTree.order = order;
+		BPlus_Tree.order = order;
 	}
 
 	public void insert(double key, String value) {
@@ -29,7 +29,7 @@ public class BTree {
 			Stack<Node> searchPath = searchKey(key);
 
 			// Case 2a. Adding the key to the LeafNode might cause imbalance
-			if (searchPath.peek().keys.size() + 1 == BTree.order) {
+			if (searchPath.peek().keys.size() + 1 == BPlus_Tree.order) {
 
 				int index = Collections.binarySearch(searchPath.peek().keys, key);
 
@@ -52,7 +52,7 @@ public class BTree {
 
 					// Balancing the entire tree until the root is reached or
 					// the intermediate node becomes balanced
-					while (!searchPath.empty() && searchPath.peek().keys.size() + 1 == BTree.order) {
+					while (!searchPath.empty() && searchPath.peek().keys.size() + 1 == BPlus_Tree.order) {
 
 						Node parent = searchPath.pop();
 						if (parent.isLeaf) {
@@ -98,13 +98,43 @@ public class BTree {
 	// Search function for single key
 	public void search(double key) {
 
+		if(root == null) return;
 		Node possibleNode = searchKey(key).peek();
 		int index = Collections.binarySearch(possibleNode.keys, key);
-		if (index >= 0)
-			System.out.println(((LeafNode) possibleNode).valueList.get(index));
+		if (index >= 0){
+			StringBuilder sb = new StringBuilder();
+			for(String value: ((LeafNode) possibleNode).valueList.get(index)){
+				sb.append(value).append(",");
+			}
+			System.out.println(sb.substring(0,sb.length()-1));
+		}
 
 	}
 
+	public void search(double key1, double key2){
+		
+		if(root == null) return;
+		LeafNode possibleNode = (LeafNode)searchKey(key1).peek();
+		int index = Collections.binarySearch(possibleNode.keys, key1);
+		index = index < 0 ? -index - 1 : index;
+		double iter = key1;
+		StringBuilder sb = new StringBuilder();
+		while(iter <= key2 && possibleNode != null){
+			while(iter <= key2){
+				for(String value: possibleNode.valueList.get(index)){
+					sb.append("(" + iter + ", " + value + "),");
+				}
+				index++;
+				if(index == possibleNode.keys.size()) break;
+				iter = possibleNode.keys.get(index);
+			}
+			possibleNode = possibleNode.getNext();
+			index = 0;
+			iter = possibleNode.keys.get(index);
+		}
+		System.out.print(sb.substring(0, sb.length()-1));
+	}
+	
 	private Stack<Node> searchKey(double key) {
 
 		Stack<Node> path = new Stack<>();
