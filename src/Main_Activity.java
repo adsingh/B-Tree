@@ -2,7 +2,7 @@ public class Main_Activity {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		BTree bT = new BTree(4);
+		BTree bT = new BTree(3);
 		bT.insert(5,"5A");
 		bT.insert(3,"3A");
 		bT.insert(8,"8A");
@@ -17,10 +17,18 @@ public class Main_Activity {
 		bT.insert(7,"7A");
 		bT.insert(7, "7B");
 		bT.insert(6, "6B");
-//		
-//        bT.search(10);
+
+		bT.insert(17,"17A");
+		bT.insert(27, "27A");
+		bT.insert(60, "60A");
 		
-		bT.printTree(bT.root);
+		bT.insert(12, "12A");
+		bT.insert(15, "15A");
+        bT.search(17);
+        bT.insert(17,"17B");
+        bT.search(17);
+        
+		System.out.println("");
 	}
 
 }

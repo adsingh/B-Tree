@@ -14,4 +14,12 @@ public class Node {
 		
 	}
 	
+	public void insert(double key, Node left, Node right){
+		
+	}
+	
+	public Node[] partition(){
+		
+		return new Node[2];
+	}
 }

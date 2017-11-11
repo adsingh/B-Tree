@@ -17,20 +17,17 @@ public class InternalNode extends Node{
 	
 	public void insert(double key, Node left, Node right){
 		
-//		System.out.println("insert of internal called");
 		int index = -Collections.binarySearch(keys, key) - 1;
-		
 		keys.add(index, key);
 		if(children.size() > 0) children.remove(index);
 		children.add(index, right);
 		children.add(index, left);
 		
-		
 	}
 	
 	public Node[] partition(){
-		InternalNode[] partitions = new InternalNode[2];
 		
+		InternalNode[] partitions = new InternalNode[2];
 		partitions[0] = new InternalNode();
 		partitions[1] = new InternalNode();
 		

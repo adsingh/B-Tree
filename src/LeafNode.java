@@ -49,6 +49,7 @@ public class LeafNode extends Node{
 	}
 	
 	public Node[] partition(){
+		
 		LeafNode[] partitions = new LeafNode[2];
 		
 		partitions[0] = new LeafNode();
@@ -56,9 +57,11 @@ public class LeafNode extends Node{
 		
 		partitions[0].keys = new ArrayList<>(this.keys.subList(0, this.keys.size() / 2));
 		partitions[0].valueList = new ArrayList<>(this.valueList.subList(0, this.keys.size() / 2));
+		partitions[0].next = partitions[1];
 		
 		partitions[1].keys = new ArrayList<>(this.keys.subList(this.keys.size() / 2, this.keys.size()));
 		partitions[1].valueList = new ArrayList<>(this.valueList.subList(this.keys.size() / 2, this.keys.size()));
+		partitions[1].prev = partitions[0];
 		
 		return partitions;
 	}
