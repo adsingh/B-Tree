@@ -27,5 +27,22 @@ public class InternalNode extends Node{
 		
 		
 	}
+	
+	public Node[] partition(){
+		InternalNode[] partitions = new InternalNode[2];
+		
+		partitions[0] = new InternalNode();
+		partitions[1] = new InternalNode();
+		
+		int length = this.keys.size();
+		
+		partitions[0].keys = new ArrayList<>(this.keys.subList(0, length/2));
+		partitions[0].children = new ArrayList<>(this.children.subList(0, length/2 + 1));
+		
+		partitions[1].keys = new ArrayList<>(this.keys.subList(length/2 + 1, length));
+		partitions[1].children = new ArrayList<>(this.children.subList(length/2 + 1, length + 1));
+		
+		return partitions;
+	}
 
 }

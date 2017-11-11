@@ -12,6 +12,24 @@ public class LeafNode extends Node{
 		isLeaf = true;
 	}
 	
+
+	public void setNext(Node next){
+		this.next = next;
+	}
+	
+	public Node getNext(){
+		return next;
+	}
+	
+	public void setPrev(Node prev){
+		this.prev = prev;
+	}
+	
+	public Node getPrev(){
+		return prev;
+	}
+	
+	
 	@Override
 	public void insert(double key, String value){
 		
@@ -30,19 +48,19 @@ public class LeafNode extends Node{
 		
 	}
 	
-	public void setNext(Node next){
-		this.next = next;
+	public Node[] partition(){
+		LeafNode[] partitions = new LeafNode[2];
+		
+		partitions[0] = new LeafNode();
+		partitions[1] = new LeafNode();
+		
+		partitions[0].keys = new ArrayList<>(this.keys.subList(0, this.keys.size() / 2));
+		partitions[0].valueList = new ArrayList<>(this.valueList.subList(0, this.keys.size() / 2));
+		
+		partitions[1].keys = new ArrayList<>(this.keys.subList(this.keys.size() / 2, this.keys.size()));
+		partitions[1].valueList = new ArrayList<>(this.valueList.subList(this.keys.size() / 2, this.keys.size()));
+		
+		return partitions;
 	}
 	
-	public Node getNext(){
-		return next;
-	}
-	
-	public void setPrev(Node prev){
-		this.prev = prev;
-	}
-	
-	public Node getPrev(){
-		return prev;
-	}
 }

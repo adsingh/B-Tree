@@ -47,28 +47,13 @@ public class BTree {
 					LeafNode leafToPartition = (LeafNode) searchPath.pop();
 					leafToPartition.insert(key, value);
 
-					Node leftPartition = new LeafNode();
-					Node rightPartition = new LeafNode();
-					
-
-					leftPartition.isLeaf = true;
-					leftPartition.keys = new ArrayList<>(
-							leafToPartition.keys.subList(0, leafToPartition.keys.size() / 2));
-					((LeafNode)leftPartition).valueList = new ArrayList<>(
-							leafToPartition.valueList.subList(0, leafToPartition.keys.size() / 2));
-					
-
-					rightPartition.isLeaf = true;
-					rightPartition.keys = new ArrayList<>(
-							leafToPartition.keys.subList(leafToPartition.keys.size() / 2, leafToPartition.keys.size()));
-					((LeafNode)rightPartition).valueList = new ArrayList<>(leafToPartition.valueList
-							.subList(leafToPartition.keys.size() / 2, leafToPartition.keys.size()));
+					Node[] partitions = leafToPartition.partition();					
 
 					// 1. LeafNode just partitioned is root Node, then simply create a new
 					// InternalNode which will be the new root and make the 2 partitions as its children
 					if (searchPath.empty()) {
 						InternalNode newRoot = new InternalNode();
-						newRoot.insert(rightPartition.keys.get(0) , leftPartition, rightPartition);
+						newRoot.insert(partitions[1].keys.get(0) , partitions[0], partitions[1]);
 						this.root = newRoot;
 					}
 					
@@ -76,26 +61,15 @@ public class BTree {
 					// inserted with recursive partitioning of the internal nodes up to the root if required
 					else {
 						
-						double keyMovingUp = rightPartition.keys.get(0);
+						double keyMovingUp = partitions[1].keys.get(0);
 						
 						// Balancing the entire tree until the root is reached or the intermediate node becomes balanced
 						while (!searchPath.empty() && searchPath.peek().keys.size() + 1 == BTree.order) {
 							
 							InternalNode parent = (InternalNode)searchPath.pop();
-							
-							parent.insert(keyMovingUp , leftPartition, rightPartition);
-							
-							int length = parent.keys.size();
-							leftPartition = new InternalNode();
-							rightPartition = new InternalNode();
-							
-							leftPartition.keys = new ArrayList<>(parent.keys.subList(0, length/2));
-							((InternalNode)leftPartition).children = new ArrayList<>(parent.children.subList(0, length/2 + 1));
-							
-							rightPartition.keys = new ArrayList<>(parent.keys.subList(length/2+1, length));
-							((InternalNode)rightPartition).children = new ArrayList<>(parent.children.subList(length/2 + 1, length + 1));
-							
-							keyMovingUp = parent.keys.get(length/2);
+							parent.insert(keyMovingUp , partitions[0], partitions[1]);
+							partitions = parent.partition();
+							keyMovingUp = parent.keys.get(parent.keys.size()/2);
 							
 						}
 
@@ -103,14 +77,14 @@ public class BTree {
 						if (searchPath.empty()) {
 							
 							InternalNode newRoot = new InternalNode();
-							newRoot.insert(keyMovingUp, leftPartition, rightPartition);
+							newRoot.insert(keyMovingUp, partitions[0], partitions[1]);
 							this.root = newRoot;
 
 						} 
 						// An intermediate node in the path towards root can fit the key
 						else {
 							InternalNode node = (InternalNode) searchPath.peek();
-							node.insert(keyMovingUp, leftPartition, rightPartition);
+							node.insert(keyMovingUp, partitions[0], partitions[1]);
 						}
 					}
 
