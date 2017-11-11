@@ -24,13 +24,11 @@ public class Main_Activity {
 		
 		bT.insert(12, "12A");
 		bT.insert(15, "15A");
-//        bT.search(17);
-        bT.insert(17,"17B");
         bT.search(17);
-        
-//        bT.printTree(bT.root);
-        
-        bT.search(2, 5);
+        bT.insert(17,"17B");
+        bT.search(60);
+        //bT.printTree(bT.root);
+        bT.search(2, 100);
         
 		System.out.println("");
 	}

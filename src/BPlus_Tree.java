@@ -120,6 +120,7 @@ public class BPlus_Tree {
 		double iter = key1;
 		StringBuilder sb = new StringBuilder();
 		while(iter <= key2 && possibleNode != null){
+			iter = possibleNode.keys.get(index);
 			while(iter <= key2){
 				for(String value: possibleNode.valueList.get(index)){
 					sb.append("(" + iter + ", " + value + "),");
@@ -130,7 +131,6 @@ public class BPlus_Tree {
 			}
 			possibleNode = possibleNode.getNext();
 			index = 0;
-			iter = possibleNode.keys.get(index);
 		}
 		System.out.print(sb.substring(0, sb.length()-1));
 	}
