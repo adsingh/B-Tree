@@ -24,7 +24,7 @@ public class BPlus_Tree {
 		else {
 
 			// Get path from root to the LeafNode that either contains the key
-			// or it will be added now
+			// or should be added to
 			// Top of this stack will always be a LeafNode
 			Stack<Node> searchPathStack = searchKey(key);
 
@@ -86,8 +86,7 @@ public class BPlus_Tree {
 
 			}
 
-			// Case 2b. Adding the key value pair to the LeafNode without any
-			// imbalance caused
+			// Case 2b. Adding the key value pair to the LeafNode without causing imbalance
 			else {
 				searchPathStack.peek().insert(key, value);
 			}
@@ -95,7 +94,7 @@ public class BPlus_Tree {
 
 	}
 
-	// Search function for single key
+	// Search method for single key
 	public void search(double key) {
 
 		if(root == null){
@@ -122,6 +121,7 @@ public class BPlus_Tree {
 
 	}
 
+	// Search method for a range of keys
 	public void search(double key1, double key2){
 		
 		if(root == null){
@@ -141,6 +141,7 @@ public class BPlus_Tree {
 			possibleNode = possibleNode.getNext();
 			index = 0;
 		}
+		
 		double iter = key1;
 		StringBuilder sb = new StringBuilder();
 		
@@ -161,13 +162,13 @@ public class BPlus_Tree {
 			possibleNode = possibleNode.getNext();
 			index = 0;
 		}
-		// if there is key-value pair to display, print NULL and return
+		// if there is no key-value pair to display, print NULL and return
 		if(sb.length() == 0){
 			System.out.println("Null");
 			return;
 		}
 		
-		// Print the output string
+		// Print the key-value pairs
 		System.out.println(sb.substring(0, sb.length()-1));
 	}
 	
