@@ -10,7 +10,7 @@ public class treesearch {
 		FileInputStream inputStream;
 		Scanner sc;
 		boolean isOrder = true;
-		BPlus_Tree bPlusTree = null;
+		BPlusTree bPlusTree = null;
 		try{
 			inputStream= new FileInputStream(args[0]);
 			sc = new Scanner(inputStream);
@@ -19,7 +19,7 @@ public class treesearch {
 				if(isOrder){
 					isOrder = false;
 					int order = Integer.parseInt(line);
-					bPlusTree = new BPlus_Tree(order);
+					bPlusTree = new BPlusTree(order);
 				}
 				else{
 					String[] cmdParts = line.split("\\(");

@@ -1,14 +1,14 @@
 import java.util.Collections;
 import java.util.Stack;
 
-public class BPlus_Tree {
+public class BPlusTree {
 
 	public Node root;
 	static Integer order;
 
-	public BPlus_Tree(int order) {
+	public BPlusTree(int order) {
 		root = null;
-		BPlus_Tree.order = order;
+		BPlusTree.order = order;
 	}
 
 	public void insert(double key, String value) {
@@ -29,7 +29,7 @@ public class BPlus_Tree {
 			Stack<Node> searchPathStack = searchKey(key);
 
 			// Case 2a. Adding the key to the LeafNode might cause imbalance
-			if (searchPathStack.peek().keys.size() + 1 == BPlus_Tree.order) {
+			if (searchPathStack.peek().keys.size() + 1 == BPlusTree.order) {
 
 				int index = Collections.binarySearch(searchPathStack.peek().keys, key);
 
@@ -52,7 +52,7 @@ public class BPlus_Tree {
 
 					// Balancing the entire tree until the root is reached or
 					// the intermediate node becomes balanced
-					while (!searchPathStack.empty() && searchPathStack.peek().keys.size() + 1 == BPlus_Tree.order) {
+					while (!searchPathStack.empty() && searchPathStack.peek().keys.size() + 1 == BPlusTree.order) {
 
 						Node parent = searchPathStack.pop();
 						if (parent.isLeaf) {
