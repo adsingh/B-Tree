@@ -4,7 +4,7 @@ import java.util.List;
 
 public class InternalNode extends Node{
 	
-	List<Node> children;
+	private List<Node> children;
 	
 	public InternalNode(){
 		children = new ArrayList<Node>();
