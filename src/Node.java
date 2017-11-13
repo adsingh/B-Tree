@@ -10,6 +10,7 @@ public class Node {
 		keys = new ArrayList<>();
 	}
 	
+	// Dummy methods used for runtime polymorphism
 	public void insert(double key, String value){
 		
 	}

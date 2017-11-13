@@ -12,7 +12,7 @@ public class LeafNode extends Node{
 		isLeaf = true;
 	}
 	
-
+	// getter and setter methods for next, prev pointers
 	public void setNext(Node next){
 		this.next = next;
 	}
@@ -48,23 +48,30 @@ public class LeafNode extends Node{
 		
 	}
 	
+	@Override
 	public Node[] partition(){
 		
 		LeafNode[] partitions = new LeafNode[2];
 		
+		// Creating two new partitions from the original partition
 		partitions[0] = new LeafNode();
 		partitions[1] = new LeafNode();
 		
+		// Copying the keys, values for the first partition 
 		partitions[0].keys = new ArrayList<>(this.keys.subList(0, this.keys.size() / 2));
 		partitions[0].valueList = new ArrayList<>(this.valueList.subList(0, this.keys.size() / 2));
 		
+		// restructuring the doubly linked list
 		partitions[0].next = partitions[1];
 		partitions[0].prev = this.prev;
 		if(this.prev != null)
 			((LeafNode)this.prev).next = partitions[0];
-		
+
+		// Copying the keys, values for the second partition
 		partitions[1].keys = new ArrayList<>(this.keys.subList(this.keys.size() / 2, this.keys.size()));
 		partitions[1].valueList = new ArrayList<>(this.valueList.subList(this.keys.size() / 2, this.keys.size()));
+
+		// restructuring the doubly linked list
 		partitions[1].prev = partitions[0];
 		partitions[1].next = this.next;
 		if(this.next != null)

@@ -12,7 +12,7 @@ public class Main_Activity {
 		boolean isOrder = true;
 		BPlus_Tree bPlusTree = null;
 		try{
-			inputStream= new FileInputStream("C:/Gainesville/Fall 2017/ADS/Project/src/input.txt");
+			inputStream= new FileInputStream(args[0]);
 			sc = new Scanner(inputStream);
 			while(sc.hasNextLine()){
 				String line = sc.nextLine();
@@ -48,6 +48,7 @@ public class Main_Activity {
 		catch(IOException e){
 			e.printStackTrace();
 		}
+		//bPlusTree.printTree(bPlusTree.root);
 	}
 
 }
