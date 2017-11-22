@@ -11,11 +11,13 @@ public class Node {
 	}
 	
 	// Dummy methods used for runtime polymorphism
+	// Used for LeafNode
 	public void insert(double key, String value){
 		
 	}
 	
-	public void insert(double key, Node left, Node right){
+	//Used for Internal Node
+	public void insert(double key, Node leftPartition, Node rightPartition){
 		
 	}
 	

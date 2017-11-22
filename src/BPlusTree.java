@@ -26,7 +26,7 @@ public class BPlusTree {
 			// Get path from root to the LeafNode that either contains the key
 			// or should be added to
 			// Top of this stack will always be a LeafNode
-			Stack<Node> searchPathStack = searchKey(key);
+			Stack<Node> searchPathStack = getPathToKey(key);
 
 			// Case 2a. Adding the key to the LeafNode might cause imbalance
 			if (searchPathStack.peek().keys.size() + 1 == BPlusTree.order) {
@@ -104,7 +104,7 @@ public class BPlusTree {
 		
 		// searchKey method returns path to the LeafNode that might contain the key
 		// in the form of a stack with the LeafNode on the top
-		Node possibleNode = searchKey(key).peek();
+		Node possibleNode = getPathToKey(key).peek();
 		
 		int index = Collections.binarySearch(possibleNode.keys, key);
 		// if the key is present the index will be positive or 0
@@ -130,7 +130,7 @@ public class BPlusTree {
 		}
 		
 		// Find key1 or key which is just greater than key1 if key1 is not present
-		LeafNode possibleNode = (LeafNode)searchKey(key1).peek();
+		LeafNode possibleNode = (LeafNode)getPathToKey(key1).peek();
 		int index = Collections.binarySearch(possibleNode.keys, key1);
 		index = index < 0 ? -index - 1 : index;
 		
@@ -175,7 +175,7 @@ public class BPlusTree {
 	// Method to locate the given key and also create a path from root 
 	// to the LeafNode that either contains the key or can contain it 
 	// Search is performed using PREORDER
-	private Stack<Node> searchKey(double key) {
+	private Stack<Node> getPathToKey(double key) {
 
 		Stack<Node> path = new Stack<>();
 		preorder(root, key, path);

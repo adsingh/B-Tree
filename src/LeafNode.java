@@ -12,41 +12,10 @@ public class LeafNode extends Node{
 		isLeaf = true;
 	}
 	
-	// getter and setter methods for next, prev pointers
-	public void setNext(Node next){
-		this.next = next;
-	}
-	
+	// getter method for next pointer
 	public LeafNode getNext(){
 		return (LeafNode)next;
-	}
-	
-	public void setPrev(Node prev){
-		this.prev = prev;
-	}
-	
-	public Node getPrev(){
-		return prev;
-	}
-	
-	
-	@Override
-	public void insert(double key, String value){
-		
-		int index = Collections.binarySearch(keys, key);
-		if(index < 0){
-			int actualIndex = -index - 1;
-			keys.add(actualIndex, key);
-			
-			List<String> values = new ArrayList<>();
-			values.add(value);
-			valueList.add(actualIndex, values);
-		}
-		else{
-			valueList.get(index).add(value);
-		}
-		
-	}
+	}	
 	
 	@Override
 	public Node[] partition(){
@@ -78,6 +47,27 @@ public class LeafNode extends Node{
 			((LeafNode)this.next).prev = partitions[1];
 		
 		return partitions;
+	}
+	
+	@Override
+	public void insert(double key, String value){
+		
+		// Search for the index of the key
+		int index = Collections.binarySearch(keys, key);
+		// if index is negative that means the key is not present
+		if(index < 0){
+			int actualIndex = -index - 1;
+			keys.add(actualIndex, key);
+			
+			List<String> values = new ArrayList<>();
+			values.add(value);
+			valueList.add(actualIndex, values);
+		}
+		// the key is present already, simply add the value
+		else{
+			valueList.get(index).add(value);
+		}
+		
 	}
 	
 }

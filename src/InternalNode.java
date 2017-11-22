@@ -16,24 +16,6 @@ public class InternalNode extends Node{
 	}
 	
 	@Override
-	public void insert(double key, Node leftPartition, Node rightPartition){
-		
-		// Find the possible position of the key to be inserted in the node 
-		int index = -Collections.binarySearch(keys, key) - 1;
-		
-		// Insert the key
-		keys.add(index, key);
-		
-		//Removing pointer to the previous child
-		if(children.size() > 0) children.remove(index);
-		
-		// Adding pointers to the new partitions of the child node
-		children.add(index, rightPartition);
-		children.add(index, leftPartition);
-		
-	}
-	
-	@Override
 	public Node[] partition(){
 		
 		InternalNode[] partitions = new InternalNode[2];
@@ -54,5 +36,23 @@ public class InternalNode extends Node{
 		
 		return partitions;
 	}
-
+	
+	@Override
+	public void insert(double key, Node leftPartition, Node rightPartition){
+		
+		// Find the possible position of the key to be inserted in the node 
+		int index = -Collections.binarySearch(keys, key) - 1;
+		
+		// Insert the key
+		keys.add(index, key);
+		
+		//Removing pointer to the previous child
+		if(children.size() > 0) children.remove(index);
+		
+		// Adding pointers to the new partitions of the child node
+		children.add(index, rightPartition);
+		children.add(index, leftPartition);
+		
+	}
+	
 }
